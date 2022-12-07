@@ -64,12 +64,12 @@ BEGIN
     SELECT COUNT(UserID) AS ValidAuth
     FROM Users
     WHERE UserID=_UserID AND UserPass=_Password;
-END //
+END ;
 
 
 
 --Procedures to check data
-CREATE PROCEDURE HouseUsers (_UserID varchar(32))
+CREATE PROCEDURE UserHouses (_UserID varchar(32))
 BEGIN
     SELECT Users.UserID, UserHouse.Permission, Houses.HouseID, Houses.Nickname, Houses.Category
     FROM Users
@@ -78,7 +78,16 @@ BEGIN
         INNER JOIN Houses
             ON UserHouse.HouseID = Houses.HouseID
     WHERE Users.UserID LIKE _UserID;
-END //
+END ;
+
+CREATE PROCEDURE HouseUsers (_HouseID int)
+BEGIN
+    SELECT Users.UserID, UserHouse.Permission, Houses.HouseID, Houses.Nickname, Houses.Category
+    FROM Users
+        INNER JOIN UserHouse
+            ON Users.UserID = UserHouse.UserID
+    WHERE UserHouse.HouseID = _HouseID;
+END;
 
 DELIMITER ;
 
