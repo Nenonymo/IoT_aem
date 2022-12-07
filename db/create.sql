@@ -1,6 +1,6 @@
 CREATE TABLE Users (
     UserID varchar(32) NOT NULL,
-    UserPass binary(64) NOT NULL,
+    UserPass varchar(32) NOT NULL,
     PRIMARY KEY (UserID)
 );
 
@@ -17,18 +17,18 @@ CREATE TABLE UserHouse (
     Permission int NOT NULL DEFAULT(0), --0=Watch only, 1=Interact, 3=Admin, 4=Owner
     PRIMARY KEY (UserID, HouseID),
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (HouseID) REFERENCES House(HouseID)
+    FOREIGN KEY (HouseID) REFERENCES Houses(HouseID)
 );
 
 CREATE TABLE Actuators (
     ActID int NOT NULL AUTO_INCREMENT, --Primary key
     Nickname varchar(32) NOT NULL,
     Addr varchar(16) NOT NULL,
-    HouseID int NOT NULL, --Foreign key
+    HouseID int NOT NULL, --Forei
     Loc varchar(64),
     Model varchar(64),
     PRIMARY KEY (ActID),
-    FOREIGN KEY (HouseID) REFERENCES House(HouseID)
+    FOREIGN KEY (HouseID) REFERENCES Houses(HouseID)
 );
 
 CREATE TABLE Groups (
