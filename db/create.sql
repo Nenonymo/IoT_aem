@@ -23,9 +23,9 @@ CREATE TABLE UserHouse (
 CREATE TABLE Actuators (
     ActID int NOT NULL AUTO_INCREMENT, --Primary key
     Nickname varchar(32) NOT NULL,
-    Addr varchar(16) NOT NULL,
+    Address varchar(16) NOT NULL,
     HouseID int NOT NULL, --Forei
-    Loc varchar(64),
+    Location varchar(64),
     Model varchar(64),
     PRIMARY KEY (ActID),
     FOREIGN KEY (HouseID) REFERENCES Houses(HouseID)
