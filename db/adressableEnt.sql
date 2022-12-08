@@ -1,15 +1,16 @@
---Returns a list of all adressable actuators in a house
-CREATE PROCEDURE GetActuators (_HouseID int)
+-- Active: 1670505946415@@109.234.160.193@3306@ahfr0859_IoTProject
+--Returns a list of all adressable Actuator in a house
+CREATE PROCEDURE GetActuator (_HouseID int)
 BEGIN
     SELECT ActID, Nickname, Loc, Model
-    FROM Actuators
-    WHERE HouseID = (SELECT HouseID FROM Houses WHERE HouseID = _HouseID);
+    FROM Actuator
+    WHERE HouseID = (SELECT HouseID FROM House WHERE HouseID = _HouseID);
 END; --Test: Pass
 
 --Returns a list of all adressable groups in a house
 CREATE PROCEDURE GetGroups (_HouseID int)
 BEGIN
-    SELECT GroupID, Nickname, Descript
+    SELECT GroupID, Nickname, Description
     FROM Groups
     WHERE HouseID = _HouseID;
 END; --Test: Pass
@@ -18,7 +19,7 @@ END; --Test: Pass
 CREATE PROCEDURE GetEntites (_HouseID int)
 BEGIN
     SELECT 'Actuator' AS Category, ActID AS ID, Nickname
-    FROM Actuators
+    FROM Actuator
     WHERE HouseID = _HouseID
     UNION ALL
     SELECT 'Group' AS Category, GroupID AS ID, Nickname

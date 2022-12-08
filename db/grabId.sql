@@ -2,14 +2,14 @@
 CREATE PROCEDURE GetGroupAddresses (_GroupID int)
 BEGIN
     SELECT Address
-    FROM Actuators
+    FROM Actuator
         INNER JOIN GroupActuator
-            ON Actuators.ActID = GroupActuator.ActID
+            ON Actuator.ActID = GroupActuator.ActID
     WHERE GroupID = _GroupID;
 END ; --Test: Pass
 
 --Grab Tellnet ID from a Actuator ID
 CREATE PROCEDURE GetActAddress (_ActuatorID int)
 BEGIN
-    SELECT Address FROM Actuators WHERE ActID = _ActuatorID;
+    SELECT Address FROM Actuator WHERE ActID = _ActuatorID;
 END; --Test: Pass
