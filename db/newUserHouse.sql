@@ -1,12 +1,12 @@
 -- Active: 1670405054298@@localhost@3306@TestIoT
 --Need to set the DELIMITER to // First.
-DELIMITER //
+
 --New User
 CREATE PROCEDURE NewUser (_UserID varchar(32), _Password varchar(32))
 BEGIN
     INSERT INTO Users (UserID, UserPass) 
     VALUES (_UserID, _Password);
-END //
+END ; --Test: Pass
 
 
 --User X Creates a house
@@ -18,7 +18,7 @@ BEGIN
     --Link new house to the user and grant owner status
     INSERT INTO UserHouse (UserID, HouseID, Permission)
     VALUES (_UserID, LAST_INSERT_ID(), 4);
-END //
+END ; --Test: Pass
 
 
 --Invites user to house
@@ -26,7 +26,7 @@ CREATE PROCEDURE InviteToHouse (_UserID varchar(32), _HouseID int, _Permission i
 BEGIN
     INSERT INTO UserHouse (UserID, HouseID, Permission) 
     VALUES (_UserID, _HouseID, _Permission);
-END //
+END ; --Test: Pass
 
 
 --Removes User from House
@@ -38,7 +38,7 @@ BEGIN
     EXISTS (SELECT UserID
         FROM UserHouse 
         WHERE UserID = _AdminID AND Permission >= 3 AND HouseID = _HouseID);
-END //
+END ; --Test: Pass
 
 
 --Change User's permissions
@@ -56,7 +56,7 @@ BEGIN
         FROM UserHouse 
         WHERE UserID=_AdminID 
         AND HouseID=_HouseID);
-END //
+END ; --Test: Pass
 
 CREATE PROCEDURE TestLogin
 (_UserID varchar(32), _Password varchar(32))
@@ -64,7 +64,7 @@ BEGIN
     SELECT COUNT(UserID) AS ValidAuth
     FROM Users
     WHERE UserID=_UserID AND UserPass=_Password;
-END ;
+END ; --Test: Pass
 
 
 
@@ -78,7 +78,7 @@ BEGIN
         INNER JOIN Houses
             ON UserHouse.HouseID = Houses.HouseID
     WHERE Users.UserID LIKE _UserID;
-END ;
+END ; --Test: Pass
 
 CREATE PROCEDURE HouseUsers (_HouseID int)
 BEGIN
@@ -87,7 +87,5 @@ BEGIN
         INNER JOIN UserHouse
             ON Users.UserID = UserHouse.UserID
     WHERE UserHouse.HouseID = _HouseID;
-END;
-
-DELIMITER ;
+END ; --Test: Pass
 
