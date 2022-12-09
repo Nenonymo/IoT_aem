@@ -58,6 +58,18 @@ BEGIN
         AND HouseID=_HouseID);
 END ; --Test: Pass
 
+
+--Changes User's Password
+CREATE PROCEDURE ChangeUserPassword
+    (_UserID varchar(32), _Password varchar(32))
+BEGIN
+    UPDATE User
+    SET UserPass = _Password
+    WHERE UserID = _UserID;
+END; --Test: Pass
+
+
+--Test the User authentification (1=Valid, 0=Invalid:={temperature:.3f}outVal)
 CREATE PROCEDURE TestLogin 
     (_UserID varchar(32), _Password varchar(32))
 BEGIN
@@ -80,6 +92,8 @@ BEGIN
     WHERE User.UserID LIKE _UserID;
 END ; --Test: Pass
 
+
+--Returns a list of all user with access to a specific house
 CREATE PROCEDURE GetHouseUsers (_HouseID int)
 BEGIN
     SELECT User.UserID, UserHouse.Permission, House.HouseID, House.Nickname, House.Category
