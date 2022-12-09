@@ -2,15 +2,13 @@ package com.example.iotlab3app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
 //import org.eclipse.paho.android.service.MqttAndroidClient;
-import com.example.iotlab3app.ui.login.LoginActivity;
+//import com.example.iotlab3app.Connection.login.LoginActivity;
 
 import info.mqtt.android.service.Ack;
 import info.mqtt.android.service.MqttAndroidClient;
@@ -20,9 +18,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.*;
 
 public class MainActivity extends AppCompatActivity {
     private TextView txv_rgb;
