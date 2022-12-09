@@ -2,6 +2,7 @@ package com.example.iotlab3app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //import org.eclipse.paho.android.service.MqttAndroidClient;
+import com.example.iotlab3app.ui.login.LoginActivity;
+
 import info.mqtt.android.service.Ack;
 import info.mqtt.android.service.MqttAndroidClient;
 
@@ -33,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /*
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+        */
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txv_rgb = (TextView) findViewById(R.id.txv_rgbValue);
@@ -47,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 if (reconnect) {
                     System.out.println("Reconnected to : " + serverURI);
                     // Re-subscribe as we lost it due to new session
-                    subscribe("IoTLab");
+                    subscribe("IoTGroup1-4Project");
                 } else {
                     System.out.println("Connected to: " + serverURI);
-                    subscribe("IoTLab");
+                    subscribe("IoTGroup1-4Project");
                 }
             }
 
