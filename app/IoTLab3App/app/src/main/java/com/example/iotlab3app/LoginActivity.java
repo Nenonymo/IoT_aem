@@ -40,13 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoginActivity.checkLogin().execute("");
+                new LoginActivity.checkLogin().execute("Login");
             }
         });
 
         regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new LoginActivity.checkLogin().execute("Register");
                 /*Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
                 finish();*/
@@ -84,13 +85,24 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 try {
-                    String sql = "CALL TestLogin ('" + usernamelogin.getText() + "', '" + passwordlogin.getText() + "');";
+                    String sql = "";
+                    String toastText = "";
+                    if(strings[0].equals("Login")) {
+                        sql = "CALL TestLogin ('" + usernamelogin.getText() + "', '" + passwordlogin.getText() + "');";
+                        toastText="Login Success";
+                    }else {
+                        sql = "CALL NewUser ('" + usernamelogin.getText() + "', '" + passwordlogin.getText() + "');";
+                    }
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(sql);
+                    rs.first();
+                    if (rs.get){
+                        Toast.makeText(LoginActivity.this, "New User Created", Toast.LENGTH_SHORT).show();
+                    }
 
-                    System.err.println("SQL Result: " + rs);
+                    System.err.println("SQL Result: " + rs.getBoolean("ValidAuth"));
 
-                    if (rs.next()) {
+                    if (rs.getBoolean("ValidAuth")) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -129,9 +141,10 @@ public class LoginActivity extends AppCompatActivity {
         Connection connection = null;
         String connectionURL = null;
         try{
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            connectionURL = "jdbc:mysql://" + server+"/" + database + ";user=" + user + ";password=" + password + ";";
-            connection = DriverManager.getConnection(connectionURL);
+            Class.forName("com.mysql.jdbc.Driver");
+            connectionURL = "jdbc:mysql://" + server+"/" + database/* + ";user=" + user + ";password=" + password + ";"*/;
+
+            connection = DriverManager.getConnection(connectionURL, user, password);
         }catch (Exception e){
             Log.e("SQL Connection Error : ", e.getMessage());
         }
