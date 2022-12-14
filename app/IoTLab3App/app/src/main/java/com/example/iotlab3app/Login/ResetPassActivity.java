@@ -13,7 +13,7 @@ import com.example.iotlab3app.R;
 import java.sql.SQLException;
 
 public class ResetPassActivity extends AppCompatActivity {
-    private EditText userName, oldPass, newPass;
+    private EditText userName, newPass;
     private Button   cancelBtn, resBtn;
 
     @Override
@@ -23,7 +23,6 @@ public class ResetPassActivity extends AppCompatActivity {
 
         userName = (EditText)findViewById(R.id.userName);
         newPass = (EditText) findViewById(R.id.newPass);
-        oldPass = (EditText)findViewById(R.id.oldPass);
         cancelBtn = (Button) findViewById(R.id.cancel_button);
         resBtn = (Button) findViewById(R.id.resPassBtn);
 
@@ -31,7 +30,9 @@ public class ResetPassActivity extends AppCompatActivity {
 
         resBtn.setOnClickListener(v -> { //TODO: SQL Code for resetting password.
             try {
-                SQLstuff.runSQL("");
+                SQLstuff.runSQL("CALL ChangeUserPassword ('" + userName.getText() + "', '" + newPass.getText() + "');");
+                Toast.makeText(this, "Password changed!", Toast.LENGTH_SHORT).show();
+                finish();
             } catch (SQLException e){
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
