@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         regbtn = (Button)findViewById(R.id.regbtn);
         resPass = (Button)findViewById(R.id.resPassBtn);
 
+        SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
+
         loginbtn.setOnClickListener(v -> new checkLogin().execute("Login"));
 
         regbtn.setOnClickListener(v -> {
@@ -69,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
 
             if(SQLstuff.getCon() == null){
                 runOnUiThread(new Runnable() {
