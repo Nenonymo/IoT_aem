@@ -10,6 +10,8 @@ import android.widget.TextView;
 //import org.eclipse.paho.android.service.MqttAndroidClient;
 //import com.example.iotlab3app.Connection.login.LoginActivity;
 
+import com.example.iotlab3app.Connection.SQLstuff;
+
 import info.mqtt.android.service.Ack;
 import info.mqtt.android.service.MqttAndroidClient;
 
@@ -19,6 +21,8 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.sql.Connection;
 
 public class MainActivity extends AppCompatActivity {
     private TextView txv_rgb;

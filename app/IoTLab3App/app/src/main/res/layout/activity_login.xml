@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".Login.LoginActivity"
     android:orientation="vertical"
     >
 
@@ -21,6 +21,13 @@
         android:inputType="textPassword"
         android:hint="Password"
         android:id="@+id/passwordlogin"/>
+
+    <Button
+        android:id="@+id/resPassBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Reset Password"
+        android:textSize="8sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +53,7 @@
             android:id="@+id/regbtn"
             android:textSize="25dp"
             />
+
     </LinearLayout>
 
 </LinearLayout>
