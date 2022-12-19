@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iotlab3app.Connection.ConnectionClass;
+import com.example.iotlab3app.Connection.Pistuff;
 import com.example.iotlab3app.Connection.SQLstuff;
+import com.example.iotlab3app.MainActivity;
 import com.example.iotlab3app.R;
 
 import java.sql.ResultSet;
@@ -40,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
         regbtn.setOnClickListener(v -> {
             new checkLogin().execute("Register");
-
             /*Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
             startActivity(intent);
             finish();*/
@@ -83,12 +84,12 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 try {
-                    boolean login = strings[0].equals("Login");
+                    String login = strings[0];
                     String sql = "";
                     SQLException error = null;
                     String toastText = "";
                     ResultSet rs = null;
-                    if (login) {
+                    if (login.equals("Login")) {
                         sql = "CALL TestLogin ('" + usernamelogin.getText() + "', '" + passwordlogin.getText() + "');";
                     } else {
                         sql = "CALL NewUser ('" + usernamelogin.getText() + "', '" + passwordlogin.getText() + "');";
@@ -101,12 +102,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (error != null){
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, "User already exist", Toast.LENGTH_SHORT).show());
-                    }else if (!login) {
+                    }else if (!login.equals("Login")) {
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, "New User Created", Toast.LENGTH_SHORT).show());
                     } else {
                         assert rs != null;
                         if (rs.getBoolean("ValidAuth")) {
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show());
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
                             z = "Success";
 
                         } else {

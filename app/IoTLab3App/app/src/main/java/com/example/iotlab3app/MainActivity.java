@@ -2,14 +2,20 @@ package com.example.iotlab3app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 //import org.eclipse.paho.android.service.MqttAndroidClient;
 //import com.example.iotlab3app.Connection.login.LoginActivity;
 
+import com.example.iotlab3app.Connection.Pistuff;
 import com.example.iotlab3app.Connection.SQLstuff;
 
 import info.mqtt.android.service.Ack;
@@ -25,112 +31,49 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.sql.Connection;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView txv_rgb;
-    public TextView txv_light;
-    public TextView txv_proximity;
-    private Button btn_color;
+    String command2 = null;
+    TextView txv_temp_indoor = null;
+    Switch lightToggle= null;
+    Button btnUpdateTemp = null;
+    TextView switchtext = null;
 
-    private MqttAndroidClient client;
-    private static final String SERVER_URI = "tcp://test.mosquitto.org:1883";
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
-        */
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txv_rgb = (TextView) findViewById(R.id.txv_rgbValue);
-        txv_light = (TextView) findViewById(R.id.txv_lightValue);
-        txv_proximity = (TextView) findViewById(R.id.txv_proximityValue);
-        btn_color = (Button) findViewById(R.id.btnColor);
-        System.err.println("test1");
-        connect();
-        client.setCallback(new MqttCallbackExtended() {
-            @Override
-            public void connectComplete(boolean reconnect, String serverURI) {
-                if (reconnect) {
-                    System.out.println("Reconnected to : " + serverURI);
-                    // Re-subscribe as we lost it due to new session
-                    subscribe("IoTGroup1-4Project");
-                } else {
-                    System.out.println("Connected to: " + serverURI);
-                    subscribe("IoTGroup1-4Project");
-                }
-            }
 
-            @Override
-            public void connectionLost(Throwable cause) {
-                System.out.println("The Connection was lost.");
-            }
+        txv_temp_indoor = (TextView) findViewById(R.id.indoorTempShow);
+        txv_temp_indoor.setText("the fetched indoor temp value");
 
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                String newMessage = new String(message.getPayload());
-                System.out.println("Incoming message: " + newMessage);
-                /* add code here to interact with elements
-                (text views, buttons)using data from newMessage*/
-                System.err.println("Message arrived: " + newMessage);
-                String[] messages = newMessage.split("/");
-                System.out.println(messages[0]);
-                txv_light.setText(messages[0]);
-                txv_proximity.setText(messages[1]);
-            }
+        switchtext = (TextView) findViewById(R.id.outdoorLightShow);
 
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
+        lightToggle= (Switch) findViewById(R.id.btnToggle);
+        lightToggle.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        // below you write code to change switch status and action to take
+                        if (isChecked) { //do something if checked
+                            command2 = "python3 Lab2/turnOn.py";
+                            switchtext.setText("On");
+                            switchtext.setTextColor(Color.GREEN);
+                            Pistuff.allActuatorsOn();
+                        } else {    // to do something if not checked
+                            command2 = "python3 Lab2/turnOff.py";
+                            switchtext.setText("Off");
+                            switchtext.setTextColor(Color.RED);
+                            Pistuff.allActuatorsOff();
+                        }
+                    }});
+
+        btnUpdateTemp = (Button) findViewById(R.id.btnUpdateTemp);
+        btnUpdateTemp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                txv_temp_indoor.setText(Pistuff.run("python getTemp.py"));
             }
         });
-    }
 
 
-    private void connect() {
-        String clientId = MqttClient.generateClientId();
-        client = new MqttAndroidClient(this.getApplicationContext(), SERVER_URI, clientId, Ack.AUTO_ACK);
-        //try {
-        System.err.println("test2");
-        IMqttToken token = client.connect();
-        System.err.println("test3");
-        token.setActionCallback(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                // We are connected
-                Log.d(TAG, "onSuccess");
-                System.out.println(TAG + "Success. Connected to " + SERVER_URI);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                // Something went wrong e.g. connection timeout or firewallproblems
-                Log.d(TAG, "onFailure");
-                System.out.println(TAG + "Oh no! Failed to connect to " + SERVER_URI);
-            }
-        });/*
-        } catch (MqttException e) {
-            e.printStackTrace();*/
-    }
-
-
-    private void subscribe(String topicToSubscribe) {
-        final String topic = topicToSubscribe;
-        int qos = 1;
-        IMqttToken subToken = client.subscribe(topic, qos);
-        subToken.setActionCallback(new IMqttActionListener() {
-            @Override
-            public void onSuccess(IMqttToken asyncActionToken) {
-                System.out.println("Subscription successful to topic: " + topic);
-            }
-
-            @Override
-            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                System.out.println("Failed to subscribe to topic: " + topic);
-                // The subscription could not be performed, maybe the user was not
-                // authorized to subscribe on the specified topic e.g. using wildcards
-            }
-        });
     }
 }

@@ -9,4 +9,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="txv_title_temp">Smart Home</string>
+    <string name="txv_indoor_temp">Indoor temperature:</string>
+    <string name="txv_indoor_temp_show">11.11</string>
+    <string name="txv_outdoor_light">Lighting:</string>
+    <string name="txv_outdoor_light_show">Off</string>
+    <string name="txv_outdoor_light_on">On</string>
+
 </resources>
