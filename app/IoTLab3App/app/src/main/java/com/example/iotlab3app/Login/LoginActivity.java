@@ -24,6 +24,7 @@ import java.sql.SQLException;
 public class LoginActivity extends AppCompatActivity {
     private EditText usernamelogin,passwordlogin;
     private Button loginbtn,regbtn, resPass;
+    public static String username;
 
 
     @Override
@@ -56,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private class checkLogin extends AsyncTask<String, String, String> {
-
         String z = null;
         Boolean isSuccess = false;
 
@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, CreateHouseActivity.class);
                             startActivity(intent);
                             z = "Success";
+                            username = usernamelogin.getText().toString();
 
                         } else {
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Check email or password", Toast.LENGTH_LONG).show());
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("SQL Error : ", e.getMessage());
                 }
             }
+
             return z;
         }
     }
