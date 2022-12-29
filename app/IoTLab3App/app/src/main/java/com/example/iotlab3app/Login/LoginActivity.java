@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.iotlab3app.Connection.ConnectionClass;
 import com.example.iotlab3app.Connection.Pistuff;
 import com.example.iotlab3app.Connection.SQLstuff;
+import com.example.iotlab3app.Groups.CreateHouseActivity;
 import com.example.iotlab3app.MainActivity;
 import com.example.iotlab3app.R;
 
@@ -108,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         assert rs != null;
                         if (rs.getBoolean("ValidAuth")) {
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show());
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, CreateHouseActivity.class);
                             startActivity(intent);
                             z = "Success";
 
