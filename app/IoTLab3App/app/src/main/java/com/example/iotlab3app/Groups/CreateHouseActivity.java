@@ -5,35 +5,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.iotlab3app.Login.LoginActivity;
 import com.example.iotlab3app.R;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ListView;
 
-import com.example.iotlab3app.Connection.ConnectionClass;
+
 import com.example.iotlab3app.Connection.SQLstuff;
-import com.example.iotlab3app.Groups.CreateHouseActivity;
-import com.example.iotlab3app.MainActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 // A class for either loading an existing house or creating a new house
 
 public class CreateHouseActivity extends AppCompatActivity {
-    private Button createBtn, loadBtn;
+    Button createBtn, loadBtn, goToHouseBtn;
     private EditText nickname, category;
-    private ListView listView;
+    private Spinner houseSpinner;
+    public static List<String> data = new ArrayList<>();
 
     String usernameValue = LoginActivity.username;
     public static String userid;
+    public static String pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +51,57 @@ public class CreateHouseActivity extends AppCompatActivity {
 
         createBtn = (Button) findViewById(R.id.createBtn);
         loadBtn = (Button) findViewById(R.id.loadBtn);
-
-        listView = (ListView) findViewById(R.id.list_view);
+        goToHouseBtn = (Button) findViewById(R.id.goToHouseBtn);
 
         createBtn.setOnClickListener(v -> new checkHouse().execute("CreateHouse"));
         loadBtn.setOnClickListener(v -> new checkHouse().execute("LoadExistingHouse"));
+        goToHouseBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateHouseActivity.this, ViewHouseActivity.class);
+            startActivity(intent);
+        });
+
+        houseSpinner = (Spinner) findViewById(R.id.houseSpinner);
 
     }
+
+        public void renderSpinner(List<String> data) {
+
+        System.out.println("renderSpinner method called!");
+        System.out.println("Data: " + data);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_spinner_item,
+                    data);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            System.out.println(adapter.getCount());
+            houseSpinner.setAdapter(adapter);
+            System.out.println("adapter set");
+
+            houseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    pos = parent.getItemAtPosition(position).toString();
+                    System.out.println("Item Selected! Position: " + pos);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+        }
 
         private class checkHouse extends AsyncTask<String, String, String> {
 
             String n = null;
             Boolean onSuccess = false;
-            List<String> data = new ArrayList<>();
+            Toast toast = null;
 
         @Override
             protected void onPreExecute() {
+
+            toast = Toast.makeText(CreateHouseActivity.this,"Check Internet Connection",Toast.LENGTH_LONG);
 
         }
 
@@ -80,7 +121,6 @@ public class CreateHouseActivity extends AppCompatActivity {
             else {
                 String loadExistingHouse = strings[0];
                 String sql = "";
-                String sql2 = "";
                 SQLException error = null;
                 String toastText = "";
                 ResultSet rs = null;
@@ -90,8 +130,7 @@ public class CreateHouseActivity extends AppCompatActivity {
 
                     if (loadExistingHouse.equals("LoadExistingHouse")) {
                         sql = "CALL GetUserHouses ('" + userid + "');";
-                        System.out.println("USER_ID: " + userid);
-                        System.out.println("USER_HOUSES: " + sql);
+                        System.out.println("User's Houses Loaded");
                     } else {
                         sql = "CALL NewHouseByUser ('" + userid + "', '" + nickname.getText() + "', '" + category.getText() + "');";
                         System.out.println("New House Created");
@@ -100,10 +139,10 @@ public class CreateHouseActivity extends AppCompatActivity {
                         rs = SQLstuff.runSQL(sql);
                         assert rs != null;
                         if(rs != null){
-                            String firstrow = rs.getString("UserID") + "," + rs.getString("Permission") + "," + rs.getString("HouseID") + "," + rs.getString("Nickname") + "," + rs.getString("Category");
-                            data.add(firstrow);
+                            String firstRow = "HouseID: " + rs.getString("HouseID") + " " + "Nickname: " + rs.getString("Nickname");
+                            data.add(firstRow);
                             while (rs.next()) {
-                                String row = rs.getString("UserID") + "," + rs.getString("Permission") + "," + rs.getString("HouseID") + "," + rs.getString("Nickname") + "," + rs.getString("Category");
+                                String row = "HouseID: " + rs.getString("HouseID") + " " + "Nickname: " + rs.getString("Nickname");
                                 data.add(row);
                             }
                             System.out.println("Rows: " + data);
@@ -121,9 +160,6 @@ public class CreateHouseActivity extends AppCompatActivity {
                     Log.e("SQL Error : ", e.getMessage());
                 }
 
-
-
-
             }
 
             return n;
@@ -131,6 +167,8 @@ public class CreateHouseActivity extends AppCompatActivity {
 
         @Override
             protected void onPostExecute(String s) {
+            renderSpinner(data);
+
 
         }
 
