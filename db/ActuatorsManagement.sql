@@ -2,10 +2,10 @@
 --Edit the Actuator and groups
 --Creates a new actuator
 CREATE PROCEDURE NewActuator (_HouseID int, _Nickname varchar(32),
-    _Address varchar(20), _Location varchar(64), Model varchar(64))
+    _Address varchar(20), _Location varchar(64), _Model varchar(64))
 BEGIN
-    INSERT INTO Actuator (HouseID, Nickname, Address, Location, model)
-    VALUES (_HouseID, _Nickname, _Adress, _Location, _Model);
+    INSERT INTO Actuator (HouseID, Nickname, Address, Location, Model)
+    VALUES (_HouseID, _Nickname, _Address, _Location, _Model);
 END; --Test: Pass
 
 --Deletes an actuator and it's group belonging
@@ -59,6 +59,14 @@ BEGIN
     FROM Actuator
     WHERE HouseID = _HouseID;
 END; --Test: Pass
+
+--See Address and Nickname of all Actuators from one House
+CREATE PROCEDURE GetHouseActuatorsMin (_HouseID int)
+BEGIN
+    SELECT ActID, Address, Nickname
+    FROM Actuator
+    WHERE HouseID = _HouseID;
+END;
 
 --See Actuator from all House
 CREATE PROCEDURE GetAllActuators ()
