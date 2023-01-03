@@ -37,7 +37,7 @@ public class CreateHouseActivity extends AppCompatActivity {
     private Spinner houseSpinner;
     public static List<String> data = new ArrayList<>();
 
-    String usernameValue = LoginActivity.username;
+    String usernameValue = SQLstuff.getUsername();
     public static String userid;
     public static String pos;
 
