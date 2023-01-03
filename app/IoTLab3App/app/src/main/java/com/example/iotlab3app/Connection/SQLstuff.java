@@ -59,8 +59,16 @@ public class SQLstuff {
         SQLstuff.username = username;
     }
 
+    public static String getHouse() {
+        return House;
+    }
+
+    public static void setHouse(String house) {
+        House = house;
+    }
+
     private static Connection con;
     private static String username;
-    private static String House;
+    private static String House = "5"; // TODO:REMOVE DEFAULT VALUE;
 
 }
