@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         // below you write code to change switch status and action to take
                         if (isChecked) { //do something if checked
-                            command2 = "python3 Lab2/turnOn.py";
+                            //command2 = "python3 Lab2/turnOn.py";
                             switchtext.setText("On");
                             switchtext.setTextColor(Color.GREEN);
                             Pistuff.allActuatorsOn();
                         } else {    // to do something if not checked
-                            command2 = "python3 Lab2/turnOff.py";
+                            //command2 = "python3 Lab2/turnOff.py";
                             switchtext.setText("Off");
                             switchtext.setTextColor(Color.RED);
                             Pistuff.allActuatorsOff();
@@ -73,7 +73,5 @@ public class MainActivity extends AppCompatActivity {
                 txv_temp_indoor.setText(Pistuff.run("python getTemp.py"));
             }
         });
-
-
     }
 }

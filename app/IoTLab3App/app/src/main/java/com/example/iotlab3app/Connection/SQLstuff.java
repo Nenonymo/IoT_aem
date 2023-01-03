@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLstuff {
+
+
     public static Connection getCon() {
         return con;
     }
@@ -49,6 +51,16 @@ public class SQLstuff {
         return rs;
     }
 
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        SQLstuff.username = username;
+    }
+
     private static Connection con;
+    private static String username;
+    private static String House;
 
 }
