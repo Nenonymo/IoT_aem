@@ -56,7 +56,7 @@ public class CreateHouseActivity extends AppCompatActivity {
         createBtn.setOnClickListener(v -> new checkHouse().execute("CreateHouse"));
         loadBtn.setOnClickListener(v -> new checkHouse().execute("LoadExistingHouse"));
         goToHouseBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(CreateHouseActivity.this, ViewHouseActivity.class);
+            Intent intent = new Intent(CreateHouseActivity.this, ActuatorList.class);
             startActivity(intent);
         });
 

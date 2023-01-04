@@ -109,7 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         assert rs != null;
                         if (rs.getBoolean("ValidAuth")) {
+                            runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show());
                             SQLstuff.setUsername(usernamelogin.getText().toString());
+                            Intent intent = new Intent(LoginActivity.this, CreateHouseActivity.class);
                             startActivity(intent);
                             z = "Success";
                             username = usernamelogin.getText().toString();

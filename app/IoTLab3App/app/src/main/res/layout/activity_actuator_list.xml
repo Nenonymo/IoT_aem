@@ -7,9 +7,21 @@
     android:orientation="vertical"
     tools:context=".Groups.ActuatorList">
 
+    <TextView
+        android:id="@+id/actuator_List_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/actuators_of_chosen_house"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingBottom="5dp"
+        />
+
     <ListView
         android:id="@+id/actuator_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/actuator_List_Title"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,8 @@
                 android:value="" />
         </activity>
 
-        <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service android:name="org.eclipse.paho.android.service.MqttService"
+            tools:ignore="MissingClass" />
 
         <activity
             android:name=".MainActivity"
@@ -57,6 +58,11 @@
             android:name=".Groups.CreateHouseActivity"
             android:exported="true"
             >
+        </activity>
+
+        <activity
+            android:name=".Groups.ActuatorList"
+            android:exported="true">
         </activity>
 
         <activity
