@@ -81,7 +81,10 @@ public class CreateHouseActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     pos = parent.getItemAtPosition(position).toString();
-                    System.out.println("Item Selected! Position: " + pos);
+                    String[] posArray = pos.split(" ");
+                    String idpos = posArray[1];
+                    System.out.println("idpos: " + posArray[1]);
+                    SQLstuff.setHouse(idpos);
                 }
 
                 @Override
