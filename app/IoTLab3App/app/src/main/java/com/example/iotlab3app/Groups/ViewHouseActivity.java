@@ -32,6 +32,7 @@ import java.sql.SQLException;
 
 public class ViewHouseActivity extends AppCompatActivity {
     TextView textview;
+    Button groupsBtn, actuatorsBtn;
 
     String house = CreateHouseActivity.pos;
     String houseDetails;
@@ -42,6 +43,19 @@ public class ViewHouseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_house);
 
         textview = (TextView) findViewById(R.id.text_view);
+
+        groupsBtn = (Button) findViewById(R.id.groupsBtn);
+        actuatorsBtn = (Button) findViewById(R.id.actuatorsBtn);
+
+        actuatorsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ViewHouseActivity.this, ActuatorList.class);
+            startActivity(intent);
+        });
+
+        groupsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ViewHouseActivity.this, LoadGroupsActivity.class);
+            startActivity(intent);
+        });
 
 
         textview.setText(house);

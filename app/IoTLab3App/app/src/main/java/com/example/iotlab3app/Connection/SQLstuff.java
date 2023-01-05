@@ -69,7 +69,7 @@ public class SQLstuff {
 
     private static Connection con;
     private static String username;
-    private static String house = "5"; // TODO: REMOVE DEFAULT VALUE;
-    private static String houseName = "Hogwarts"; // TODO: REMOVE DEFAULT VALUE;
+    private static String house;
+    private static String houseName;
 
 }
