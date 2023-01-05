@@ -29,6 +29,8 @@ import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// A class that manages all groups that belongs to a house with CRD operations
+
 public class LoadGroupsActivity extends AppCompatActivity {
 
     TextView textview;
@@ -54,6 +56,12 @@ public class LoadGroupsActivity extends AppCompatActivity {
 
         createGroupBtn.setOnClickListener(v -> new checkGroups().execute("CreateGroup"));
         loadGroupsBtn.setOnClickListener(v -> new checkGroups().execute("LoadExistingGroups"));
+        deleteGroupBtn.setOnClickListener(v -> new checkGroups().execute("DeleteSelectedGroup"));
+
+        goToGroupBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(LoadGroupsActivity.this, ViewGroupActivity.class);
+            startActivity(intent);
+        });
 
 
     }
@@ -75,10 +83,11 @@ public class LoadGroupsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 pos = parent.getItemAtPosition(position).toString();
-                //String[] posArray = pos.split(" ");
-                //String idpos = posArray[1];
-                //System.out.println("idpos: " + posArray[1]);
-                //SQLstuff.setHouse(idpos);
+                String[] posArray = pos.split(" ");
+                String idpos = posArray[1];
+                System.out.println("GroupID: " + idpos);
+                SQLstuff.setGroup(idpos);
+                SQLstuff.setAllGroupInfo(pos);
             }
 
             @Override
@@ -131,19 +140,34 @@ public class LoadGroupsActivity extends AppCompatActivity {
 
                     if (loadExistingGroups.equals("LoadExistingGroups")) {
                         sql = "CALL GetHouseGroups('" + houseid + "');";
-                        System.out.println("User's Houses Loaded");
-                    } else {
-                        sql = "CALL NewGroup('" + nickname.getText() + "', '" + houseid + "', '" + description.getText() + "');";
-                        System.out.println("New House Created");
+                        System.out.println("House's Groups Loaded");
+                    } else if (loadExistingGroups.equals("CreateGroup")){
+                        if(nickname.getText().length() > 0 && description.getText().length() > 0) {
+                            sql = "CALL NewGroup('" + nickname.getText() + "', '" + houseid + "', '" + description.getText() + "');";
+                            nickname.setText("");
+                            description.setText("");
+                            System.out.println("New Group Created");
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LoadGroupsActivity.this,"Please enter a nickname and a description",Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    } else{
+                        String groupid = SQLstuff.getGroup();
+                        System.out.println("Variable groupid: " + groupid);
+                        sql = "CALL RemoveGroup('" + groupid + "');";
                     }
                     try {
                         rs = SQLstuff.runSQL(sql);
                         assert rs != null;
                         if(rs != null){
-                            String firstRow = "Nickname: " + rs.getString("Nickname") + " " + "Description: " + rs.getString("Description");
+                            String firstRow = "GroupID: " + rs.getString("GroupID") + " " + "Nickname: " + rs.getString("Nickname");
                             groupData.add(firstRow);
                             while (rs.next()) {
-                                String row = "Nickname: " + rs.getString("Nickname") + " " + "Description: " + rs.getString("Description");
+                                String row = "GroupID: " + rs.getString("GroupID") + " " + "Nickname: " + rs.getString("Nickname");
                                 groupData.add(row);
                             }
                             System.out.println("Rows: " + groupData);

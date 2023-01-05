@@ -30,12 +30,12 @@ import java.sql.SQLException;
 
 
 // A class for either loading an existing house or creating a new house
+// Also gives user the option to go to selected house in Spinner
 
 public class CreateHouseActivity extends AppCompatActivity {
-    Button createBtn, loadBtn, goToHouseBtn;
+    Button createBtn, loadBtn, goToHouseBtn, deleteHouseBtn;
     private EditText nickname, category;
     private Spinner houseSpinner;
-    public static List<String> data = new ArrayList<>();
 
     String usernameValue = SQLstuff.getUsername();
     public static String userid;
@@ -52,9 +52,11 @@ public class CreateHouseActivity extends AppCompatActivity {
         createBtn = (Button) findViewById(R.id.createBtn);
         loadBtn = (Button) findViewById(R.id.loadBtn);
         goToHouseBtn = (Button) findViewById(R.id.goToHouseBtn);
+        deleteHouseBtn = (Button) findViewById(R.id.deleteHouseBtn);
 
         createBtn.setOnClickListener(v -> new checkHouse().execute("CreateHouse"));
         loadBtn.setOnClickListener(v -> new checkHouse().execute("LoadExistingHouse"));
+        deleteHouseBtn.setOnClickListener(v -> new checkHouse().execute("DeleteHouse"));
         goToHouseBtn.setOnClickListener(v -> {
             Intent intent = new Intent(CreateHouseActivity.this, ViewHouseActivity.class);
             startActivity(intent);
@@ -83,7 +85,7 @@ public class CreateHouseActivity extends AppCompatActivity {
                     pos = parent.getItemAtPosition(position).toString();
                     String[] posArray = pos.split(" ");
                     String idpos = posArray[1];
-                    System.out.println("idpos: " + posArray[1]);
+                    System.out.println("HouseID: " + idpos);
                     SQLstuff.setHouse(idpos);
                 }
 
@@ -100,6 +102,8 @@ public class CreateHouseActivity extends AppCompatActivity {
             String n = null;
             Boolean onSuccess = false;
             Toast toast = null;
+
+            List<String> data = new ArrayList<>();
 
         @Override
             protected void onPreExecute() {
@@ -129,14 +133,28 @@ public class CreateHouseActivity extends AppCompatActivity {
                 ResultSet rs = null;
 
                 try {
-                    userid = usernameValue;
+                    String userid = SQLstuff.getUsername();
+                    System.out.println("UserID is: " + userid);
 
                     if (loadExistingHouse.equals("LoadExistingHouse")) {
                         sql = "CALL GetUserHouses ('" + userid + "');";
                         System.out.println("User's Houses Loaded");
+                    } else if(loadExistingHouse.equals("CreateHouse")){
+                        if(nickname.getText().length() > 0 && category.getText().length() > 0) {
+                            sql = "CALL NewHouseByUser ('" + userid + "', '" + nickname.getText() + "', '" + category.getText() + "');";
+                            nickname.setText("");
+                            category.setText("");
+                            System.out.println("New House Created");
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(CreateHouseActivity.this,"Please enter a nickname and a category",Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
                     } else {
                         sql = "CALL NewHouseByUser ('" + userid + "', '" + nickname.getText() + "', '" + category.getText() + "');";
-                        System.out.println("New House Created");
                     }
                     try {
                         rs = SQLstuff.runSQL(sql);

@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.xml.transform.Result;
+
 public class SQLstuff {
 
 
@@ -67,9 +69,18 @@ public class SQLstuff {
         SQLstuff.house = house;
     }
 
+    public static String getGroup() {return groupID;}
+    public static void setGroup(String groupID){SQLstuff.groupID = groupID;}
+    public static void setAllGroupInfo(String groupInfo){SQLstuff.groupInfo = groupInfo;}
+    public static String getAllGroupInfo(){return groupInfo;}
+
     private static Connection con;
     private static String username;
     private static String house;
     private static String houseName;
+
+    private static String groupID;
+    private static String groupInfo;
+    private static ResultSet group;
 
 }

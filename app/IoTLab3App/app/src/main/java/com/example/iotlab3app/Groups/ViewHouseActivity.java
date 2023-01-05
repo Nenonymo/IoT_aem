@@ -30,6 +30,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+// A class for two buttons to go to either Actuators page or
+// to Groups page
+
 public class ViewHouseActivity extends AppCompatActivity {
     TextView textview;
     Button groupsBtn, actuatorsBtn;

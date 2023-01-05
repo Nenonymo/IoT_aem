@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Groups.ViewGroupActivity"
+    android:orientation="vertical"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to your Group's Page!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/text_view_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        />
+
+    <Spinner
+        android:id="@+id/group_actuator_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Group Actuators"
+        android:textSize="10sp"
+        android:id="@+id/loadGroupActuatorsBtn"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Selected Group Actuator"
+        android:textSize="10sp"
+        android:id="@+id/deleteActuatorBtn"
+        />
+
+    <Spinner
+        android:id="@+id/house_actuator_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load House Actuators"
+        android:textSize="10sp"
+        android:id="@+id/loadHouseActuatorsBtn"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Selected Actuator To Group"
+        android:textSize="10sp"
+        android:id="@+id/addActuatorBtn"
+        />
+
+</LinearLayout>

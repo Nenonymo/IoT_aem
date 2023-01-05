@@ -48,4 +48,11 @@
         android:textSize="10sp"
         android:id="@+id/goToHouseBtn"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Selected House"
+        android:textSize="10sp"
+        android:id="@+id/deleteHouseBtn"/>
+
 </LinearLayout>
