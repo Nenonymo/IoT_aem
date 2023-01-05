@@ -20,6 +20,20 @@ BEGIN
     VALUES (_UserID, LAST_INSERT_ID(), 4);
 END ; --Test: Pass
 
+--Delete House and everything linked to it
+CREATE PROCEDURE RemoveHouse (_HouseID int)
+BEGIN
+    --Delete all User-House links
+    DELETE FROM UserHouse WHERE HouseID=_HouseID;
+    --Delete all group-actuator links
+    DELETE FROM GroupActuator WHERE GroupID IN (SELECT GroupID FROM Groups WHERE HouseID=_HouseID);
+    --Delete all actuators
+    DELETE FROM Actuator WHERE HouseID=_HouseID;
+    --Delete all groups
+    DELETE FROM Groups WHERE HouseID=_HouseID;
+    --Delete House
+    DELETE FROM House WHERE HouseID=_HouseID;
+END; --Test: Untested
 
 --Invites user to house
 CREATE PROCEDURE AddUserToHouse (_UserID varchar(32), _HouseID int, _Permission int)
