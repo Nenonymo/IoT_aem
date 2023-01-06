@@ -93,27 +93,37 @@ BEGIN
 END ; --Test: Pass
 
 
+--Test if the user exists
+CREATE PROCEDURE TestUser (_UserID varchar(32))
+BEGIN
+    SELECT COUNT(UserID) AS ValidUser
+    FROM User
+    WHERE UserID=_UserID;
+END;
+
+--Test: Pass
+CALL TestUser ('user1');
+
 
 --Procedures to check data
 CREATE PROCEDURE GetUserHouses (_UserID varchar(32))
 BEGIN
-    SELECT User.UserID, UserHouse.Permission, House.HouseID, House.Nickname, House.Category
-    FROM User
-        INNER JOIN UserHouse
-            ON User.UserID = UserHouse.UserID
+    SELECT UserHouse.Permission, House.HouseID, House.Nickname, House.Category
+    FROM UserHouse
         INNER JOIN House
             ON UserHouse.HouseID = House.HouseID
-    WHERE User.UserID LIKE _UserID;
-END ; --Test: Pass
+    WHERE UserHouse.UserID LIKE _UserID;
+END ; 
+--Test: Pass
+CALL GetUserHouses ('harryp');
 
 
 --Returns a list of all user with access to a specific house
 CREATE PROCEDURE GetHouseUsers (_HouseID int)
 BEGIN
-    SELECT User.UserID, UserHouse.Permission, House.HouseID, House.Nickname, House.Category
-    FROM User
-        INNER JOIN UserHouse
-            ON User.UserID = UserHouse.UserID
-    WHERE UserHouse.HouseID = _HouseID;
-END ; --Test: Pass
-
+    SELECT UserID, Permission
+    FROM UserHouse
+    WHERE HouseID = _HouseID;
+END ; 
+--Test: Pass
+CALL GetHouseUsers (18);
