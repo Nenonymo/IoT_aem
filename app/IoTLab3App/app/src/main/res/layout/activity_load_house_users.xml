@@ -4,43 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Groups.ViewHouseActivity"
+    tools:context=".Groups.LoadHouseUsersActivity"
     android:orientation="vertical"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to your House Page!"
+        android:text="Welcome to your User Management Page!"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         />
 
     <TextView
-        android:id="@+id/text_view"
+        android:text="Click, create or delete a user from the house!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Groups"
-        android:textSize="10sp"
-        android:id="@+id/groupsBtn"/>
+    <Spinner
+        android:id="@+id/user_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Actuators"
+        android:text="Load Users"
         android:textSize="10sp"
-        android:id="@+id/actuatorsBtn"/>
+        android:id="@+id/loadUsersBtn"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="House users"
+        android:text="Delete Selected User"
         android:textSize="10sp"
-        android:id="@+id/houseUsersBtn"/>
+        android:id="@+id/deleteUserBtn"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="UserID"
+        android:id="@+id/user_id"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Desired User Permission"
+        android:id="@+id/user_permission"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add User To House"
+        android:textSize="10sp"
+        android:id="@+id/addUserBtn"/>
 
 </LinearLayout>

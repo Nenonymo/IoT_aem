@@ -74,6 +74,14 @@ public class SQLstuff {
     public static void setAllGroupInfo(String groupInfo){SQLstuff.groupInfo = groupInfo;}
     public static String getAllGroupInfo(){return groupInfo;}
 
+    public static void setGroupActuator(String groupActID) {SQLstuff.groupActID = groupActID;}
+    public static String getGroupActuator(){return groupActID;}
+    public static void setAddHouseActuator(String houseActID) {SQLstuff.houseActID = houseActID;}
+    public static String getAddHouseActuator(){return houseActID;}
+
+    public static void setSelectedUser(String selectedUserID){SQLstuff.selectedUserID = selectedUserID;}
+    public static String getSelectedUserID(){return selectedUserID;}
+
     private static Connection con;
     private static String username;
     private static String house;
@@ -81,6 +89,10 @@ public class SQLstuff {
 
     private static String groupID;
     private static String groupInfo;
-    private static ResultSet group;
+
+    private static String groupActID;
+    private static String houseActID;
+
+    private static String selectedUserID;
 
 }

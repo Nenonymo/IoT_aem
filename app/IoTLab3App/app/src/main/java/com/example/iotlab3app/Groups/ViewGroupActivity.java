@@ -87,8 +87,7 @@ public class ViewGroupActivity extends AppCompatActivity{
                 String[] posArray = pos.split(" ");
                 String idpos = posArray[1];
                 System.out.println("ActID: " + idpos);
-                //SQLstuff.setGroup(idpos);
-                //SQLstuff.setAllGroupInfo(pos);
+                SQLstuff.setGroupActuator(idpos);
             }
 
             @Override
@@ -119,8 +118,8 @@ public class ViewGroupActivity extends AppCompatActivity{
                 String[] posArray = pos.split(" ");
                 String idpos = posArray[1];
                 System.out.println("ActID: " + idpos);
-                //SQLstuff.setGroup(idpos);
-                //SQLstuff.setAllGroupInfo(pos);
+                SQLstuff.setAddHouseActuator(idpos);
+
             }
 
             @Override
@@ -172,41 +171,41 @@ public class ViewGroupActivity extends AppCompatActivity{
 
                     String houseid = SQLstuff.getHouse();
                     String groupid = SQLstuff.getGroup();
-                            System.out.println("HouseID is: " + houseid);
+                    String actid = SQLstuff.getGroupActuator();
+                    String actAddID = SQLstuff.getAddHouseActuator();
 
                     if (actuatorOption.equals("LoadGroupActuators")) {
                         sql = "CALL GetGroupMembers('" + groupid + "');";
                         System.out.println("House's GroupActuators Loaded");
-                    } /*else if (actuatorOption.equals("CreateActuator")){
-                        if(groupid.getText().length() > 0 && actuatorid.getText().length() > 0) {
-                            sql = "CALL NewGroup('" + groupid.getText() + "', '" + houseid + "', '" + description.getText() + "');";
-                            nickname.setText("");
-                            description.setText("");
-                            System.out.println("New Group Created");
+                    } else if (actuatorOption.equals("AddActuator")){
+                        if(actAddID != null) {
+                            System.out.println("gruppid: " + groupid + "actid: " + actAddID);
+                            sql = "CALL AddActuatorToGroup('" + groupid + "', '" + actAddID + "');";
+                            System.out.println("New Actuator Added To Group");
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(ViewGroupActivity.this,"Please enter a nickname and a description",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ViewGroupActivity.this,"Please select a house actuator!",Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
-                    }*/ else if (actuatorOption.equals("LoadHouseActuators")) {
+                    } else if (actuatorOption.equals("LoadHouseActuators")) {
                         sql = "CALL GetHouseActuators('" + houseid + "');";
                         System.out.println("House's Actuators Loaded");
                     }
 
-                    else{
-                        //sql = "CALL RemoveGroup('" + groupid + "');";
+                    else if (actuatorOption.equals("DeleteActuator")){
+                        sql = "CALL RemoveActuatorFromGroup('" + groupid + "', '" + actid + "');";
                     }
                     try {
                         rs = SQLstuff.runSQL(sql);
                         assert rs != null;
                         if(rs != null){
-                            String firstRow = "ActID: " + rs.getString("Actuator.ActID") + " " + "Nickname: " + rs.getString("Nickname");
+                            String firstRow = "ActID: " + rs.getString("Actuator.ActID") + " " + "Nickname: " + rs.getString("Nickname") + " " + "Address: " + rs.getString("Address");
                             groupActuatorData.add(firstRow);
                             while (rs.next()) {
-                                String row = "ActID: " + rs.getString("Actuator.ActID") + " " + "Nickname: " + rs.getString("Nickname");
+                                String row = "ActID: " + rs.getString("Actuator.ActID") + " " + "Nickname: " + rs.getString("Nickname") + " " + "Address: " + rs.getString("Address");
                                 groupActuatorData.add(row);
                             }
                             System.out.println("Rows: " + groupActuatorData);
@@ -235,6 +234,9 @@ public class ViewGroupActivity extends AppCompatActivity{
                 renderGroupActuatorSpinner(groupActuatorData);
             } else if(actuatorOption.equals("LoadHouseActuators")) {
                 renderHouseActuatorSpinner(groupActuatorData);
+            } else if(actuatorOption.equals("DeleteActuator") || actuatorOption.equals("AddActuator") ){
+                group_actuator_spinner.setAdapter(null);
+                house_actuator_spinner.setAdapter(null);
             }
         }
 
