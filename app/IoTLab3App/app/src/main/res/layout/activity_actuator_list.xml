@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Groups.ActuatorList">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose a group to turn all actuators On/Off"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        />
+
+    <Spinner
+        android:id="@+id/group_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/load_group_actuators"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Group Actuators"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        >
+
+        <Button
+            android:id="@+id/turn_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On"
+            android:layout_marginRight="5dp"
+            />
+
+        <Button
+            android:id="@+id/turn_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Off"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/actuator_List_Title"
@@ -19,11 +67,8 @@
 
     <ListView
         android:id="@+id/actuator_list"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/new_actuator"
-        app:layout_constraintTop_toBottomOf="@+id/actuator_List_Title"
-        tools:layout_editor_absoluteX="0dp"
         />
 
     <Button
@@ -31,7 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New actuator"
-        app:layout_constraintTop_toBottomOf="@+id/actuator_list"
-        tools:layout_editor_absoluteX="129dp" />
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

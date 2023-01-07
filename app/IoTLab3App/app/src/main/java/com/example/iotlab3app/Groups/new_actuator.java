@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.iotlab3app.Connection.SQLstuff;
 import com.example.iotlab3app.R;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class new_actuator extends AppCompatActivity {
@@ -38,17 +39,25 @@ public class new_actuator extends AppCompatActivity {
 
         addAct.setOnClickListener(v -> {
             try {
-                SQLstuff.runSQL("CALL NewActuator(" + SQLstuff.getHouse() +
-                        ", '" + nickname.getText() + "', '" + ID.getText() +
-                        "', '" + location.getText() + "', '" + type.getText() + "');");
+                if(nickname.getText().length() > 0 && location.getText().length() > 0 && ID.getText().length() > 0 && type.getText().length() > 0){
+                    ResultSet rs = SQLstuff.runSQL("CALL NewActuator(" + SQLstuff.getHouse() +
+                            ", '" + nickname.getText() + "', '" + ID.getText() +
+                            "', '" + location.getText() + "', '" + type.getText() + "');");
 
-                Toast.makeText(this, "New actuator added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "New actuator added", Toast.LENGTH_SHORT).show();
 
-                cancel.callOnClick();
+                    Intent intent = new Intent(this, ActuatorList.class);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(this, "Please insert text in all fields", Toast.LENGTH_SHORT).show();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
 
     }
+
+
 }
