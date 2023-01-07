@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.iotlab3app.Connection.SQLstuff;
 
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import java.sql.SQLException;
 public class ViewGroupActivity extends AppCompatActivity{
 
     TextView textview;
-    Button loadGroupActuatorsBtn, loadHouseActuatorsBtn, deleteActuatorBtn, addActuatorBtn;
+    Button loadGroupActuatorsBtn, loadHouseActuatorsBtn, deleteActuatorBtn, addActuatorBtn, deleteHouseActBtn;
     Spinner group_actuator_spinner, house_actuator_spinner;
 
     String group = SQLstuff.getGroup();
@@ -57,6 +58,7 @@ public class ViewGroupActivity extends AppCompatActivity{
         loadHouseActuatorsBtn = (Button) findViewById(R.id.loadHouseActuatorsBtn);
         deleteActuatorBtn = (Button) findViewById(R.id.deleteActuatorBtn);
         addActuatorBtn = (Button) findViewById(R.id.addActuatorBtn);
+        deleteHouseActBtn = (Button) findViewById(R.id.deleteHouseActBtn);
 
         textview.setText(groupInfo);
 
@@ -64,6 +66,7 @@ public class ViewGroupActivity extends AppCompatActivity{
         deleteActuatorBtn.setOnClickListener(v -> new checkGroupActuators().execute("DeleteActuator"));
         loadHouseActuatorsBtn.setOnClickListener(v -> new checkGroupActuators().execute("LoadHouseActuators"));
         addActuatorBtn.setOnClickListener(v -> new checkGroupActuators().execute("AddActuator"));
+        deleteHouseActBtn.setOnClickListener(v -> new checkGroupActuators().execute("DeleteHouseActuator"));
 
     }
 
@@ -171,7 +174,7 @@ public class ViewGroupActivity extends AppCompatActivity{
 
                     String houseid = SQLstuff.getHouse();
                     String groupid = SQLstuff.getGroup();
-                    String actid = SQLstuff.getGroupActuator();
+                    String actid = SQLstuff.getHouse();
                     String actAddID = SQLstuff.getAddHouseActuator();
 
                     if (actuatorOption.equals("LoadGroupActuators")) {
@@ -197,6 +200,10 @@ public class ViewGroupActivity extends AppCompatActivity{
 
                     else if (actuatorOption.equals("DeleteActuator")){
                         sql = "CALL RemoveActuatorFromGroup('" + groupid + "', '" + actid + "');";
+                        System.out.println(actid);
+                    }
+                    else if(actuatorOption.equals("DeleteHouseActuator")){
+                        sql = "CALL RemoveActuator('" + actAddID + "');";
                     }
                     try {
                         rs = SQLstuff.runSQL(sql);
@@ -234,7 +241,7 @@ public class ViewGroupActivity extends AppCompatActivity{
                 renderGroupActuatorSpinner(groupActuatorData);
             } else if(actuatorOption.equals("LoadHouseActuators")) {
                 renderHouseActuatorSpinner(groupActuatorData);
-            } else if(actuatorOption.equals("DeleteActuator") || actuatorOption.equals("AddActuator") ){
+            } else if(actuatorOption.equals("DeleteActuator") || actuatorOption.equals("AddActuator") || actuatorOption.equals("DeleteHouseActuator") ){
                 group_actuator_spinner.setAdapter(null);
                 house_actuator_spinner.setAdapter(null);
             }

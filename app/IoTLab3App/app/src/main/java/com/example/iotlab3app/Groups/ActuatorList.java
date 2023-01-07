@@ -46,10 +46,7 @@ public class ActuatorList extends AppCompatActivity {
     String[] listItems;
     Map<String, Boolean> actuatorONorOFF = new HashMap<>();
     Map<String, String> itemMap = new HashMap<>();
-    String[] mobileArray = {
-            "Main Hall","Hufflepuff commonroom",
-            "Ravenclaw commonroom","Slytherin commonroom",
-            "Gryffindoor commonroom", "3rd floor library"};
+    String[] mobileArray = {};
 
 
     @SuppressLint("SetTextI18n")
@@ -335,7 +332,6 @@ public class ActuatorList extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             renderSpinner(groupData);
-
 
         }
 
