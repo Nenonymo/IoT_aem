@@ -1,0 +1,21 @@
+actuator manual:
+
+Usage:
+    ./actuate [--on | --off] [-v|--value 1|0] [-d|--delay DELAY] [-u|--unit s|m|h] actuator(s)..."
+
+Args:
+    [--on | --off]: Specify wether you want to switch the actuators on or off
+            default: off
+    [-v|--value 1|0]: Specify wether you want to switch the actuators on or off 
+            0: off
+            1: on
+            default: 0
+    [-d|--delay DELAY]: Specifies the delay you want before the value is switched back to opposite value 
+            0: no switching back
+            default: 0
+    [-u|--unit]: Specifies in which unit the delay was given.
+            s: seconds
+            m: minutes
+            h: hours
+            default: s
+    actuators: list of all actuators to switch
