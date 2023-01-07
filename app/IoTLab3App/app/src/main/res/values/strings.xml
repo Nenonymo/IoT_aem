@@ -17,5 +17,10 @@
     <string name="txv_outdoor_light_show">Off</string>
     <string name="txv_outdoor_light_on">On</string>
     <string name="actuators_of_chosen_house">Actuators of chosen house:</string>
+    <string name="new_actuator_nickname">Actuator Nickname</string>
+    <string name="new_actuator_id">Actuator ID</string>
+    <string name="new_actuator_location">Actuator location</string>
+    <string name="new_actuator_type">Actuator type</string>
+    <string name="add_new_actuator">Add actuator</string>
 
 </resources>
