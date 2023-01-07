@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-                n = "On Internet Connection";
+                z = "On Internet Connection";
             }
             else {
                 try {
