@@ -41,6 +41,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:text="Login"
             android:id="@+id/loginbtn"
             android:textSize="25dp"
@@ -49,6 +50,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:text="Register"
             android:id="@+id/regbtn"
             android:textSize="25dp"

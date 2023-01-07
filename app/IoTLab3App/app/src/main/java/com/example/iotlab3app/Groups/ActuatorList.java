@@ -35,6 +35,7 @@ public class ActuatorList extends AppCompatActivity {
 
     TextView title;
     String[] listItems;
+    Map<String, Boolean> actuatorONorOFF = new HashMap<>();
     Map<String, String> itemMap = new HashMap<>();
     String[] mobileArray = {
             "Main Hall","Hufflepuff commonroom",
@@ -52,7 +53,7 @@ public class ActuatorList extends AppCompatActivity {
 
         Button new_actuator = (Button) findViewById(R.id.new_actuator);
         new_actuator.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ResetPassActivity.class);
+            Intent intent = new Intent(this, new_actuator.class);
             startActivity(intent);
         });
 
@@ -77,8 +78,18 @@ public class ActuatorList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String) listView.getItemAtPosition(position);
-                //Pistuff.actuatorOn(itemMap.get(item));
-                System.out.println(item + ": " + itemMap.get(item));
+                String actuatorID = itemMap.get(item);
+                Boolean ONorOFF = actuatorONorOFF.get(actuatorID);
+                if (Boolean.TRUE.equals(ONorOFF)){
+                    Pistuff.actuatorOff(itemMap.get(item));
+                    actuatorONorOFF.put(actuatorID, false);
+                    System.out.println(item + " OFF: " + actuatorID);
+                }
+                if (Boolean.FALSE.equals(ONorOFF)){
+                    Pistuff.actuatorOn(itemMap.get(item));
+                    actuatorONorOFF.put(actuatorID, true);
+                    System.out.println(item + " ON: " + actuatorID);
+                }
             }
         });
     }
@@ -123,9 +134,11 @@ public class ActuatorList extends AppCompatActivity {
                         }
                         assert items != null;
                         itemMap.put(items.getString(3), items.getString(2));
+                        actuatorONorOFF.put(items.getString(2), false);
                         System.out.println(itemMap.values());
                         while (items.next()){
                             itemMap.put(items.getString(3), items.getString(2));
+                            actuatorONorOFF.put(items.getString(2), false);
                             System.out.println("In While");
                         }
                         listItems = itemMap.keySet().toArray(new String[0]);

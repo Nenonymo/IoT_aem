@@ -94,5 +94,4 @@ public class SQLstuff {
     private static String houseActID;
 
     private static String selectedUserID;
-
 }
