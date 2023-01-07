@@ -12,7 +12,7 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
 public class Pistuff {
-    static String hostname = "172.20.10.12";
+    static String hostname = "192.168.1.137";
     static String username = "pi";
     static String password = "student123";
 
@@ -68,4 +68,10 @@ public class Pistuff {
         run("bash AllOnOrOff off");
     }
 
+    public static void fetchTempValues() {run("bash getTemp");}
+
+    public static void setAllTempValues(String command){run("bash getTemp");}
+    public static String getAllTempValues(){return allTempValues;}
+
+    private static String allTempValues;
 }

@@ -131,6 +131,7 @@ public class CreateHouseActivity extends AppCompatActivity {
                 SQLException error = null;
                 String toastText = "";
                 ResultSet rs = null;
+                String houseid = SQLstuff.getHouse();
 
                 try {
                     String userid = SQLstuff.getUsername();
@@ -154,7 +155,7 @@ public class CreateHouseActivity extends AppCompatActivity {
                             });
                         }
                     } else {
-                        sql = "CALL NewHouseByUser ('" + userid + "', '" + nickname.getText() + "', '" + category.getText() + "');";
+                        sql = "CALL RemoveHouse('" + houseid + "');";
                     }
                     try {
                         rs = SQLstuff.runSQL(sql);

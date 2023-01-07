@@ -131,11 +131,13 @@ public class LoadHouseUsersActivity extends AppCompatActivity {
                     if (userOptions.equals("LoadUsers")) {
                         sql = "CALL GetHouseUsers('" + houseid + "');";
                         System.out.println("House's Users Loaded");
-                    } else if (userOptions.equals("AddUser")){
+                    } else if (userOptions.equals("AddUser")) {
                         int permission = 0;
-                        if (user_id.getText().length() > 0 && user_permission.getText().length() > 0){
+                        int userex = 0;
+                        if (user_id.getText().length() > 0 && user_permission.getText().length() > 0) {
                             permission = Integer.parseInt(String.valueOf(user_permission.getText()));
-                        } if(permission >= 1 && permission <= 4){
+                        }
+                        if (permission >= 1 && permission <= 4) {
                             sql = "CALL AddUserToHouse('" + user_id.getText() + "', '" + houseid + "', '" + user_permission.getText() + "');";
                             user_id.setText("");
                             user_permission.setText("");
@@ -144,7 +146,7 @@ public class LoadHouseUsersActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(LoadHouseUsersActivity.this,"Please enter a userID and a permission from 1-4",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoadHouseUsersActivity.this, "Please enter a userID and a permission from 1-4", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -172,6 +174,7 @@ public class LoadHouseUsersActivity extends AppCompatActivity {
                     } catch (SQLException e) {
                         error = e;
                         System.out.println(error);
+
                     }
 
                 }catch (Exception e){

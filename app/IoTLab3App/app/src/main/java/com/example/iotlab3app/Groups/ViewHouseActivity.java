@@ -3,6 +3,7 @@ package com.example.iotlab3app.Groups;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.iotlab3app.Login.LoginActivity;
+import com.example.iotlab3app.MainActivity;
 import com.example.iotlab3app.R;
 
 import android.content.Intent;
@@ -35,7 +36,7 @@ import java.sql.SQLException;
 
 public class ViewHouseActivity extends AppCompatActivity {
     TextView textview;
-    Button groupsBtn, actuatorsBtn, houseUsersBtn;
+    Button groupsBtn, actuatorsBtn, houseUsersBtn, raspiBtn;
 
     String house = CreateHouseActivity.pos;
     String houseDetails;
@@ -50,6 +51,7 @@ public class ViewHouseActivity extends AppCompatActivity {
         groupsBtn = (Button) findViewById(R.id.groupsBtn);
         actuatorsBtn = (Button) findViewById(R.id.actuatorsBtn);
         houseUsersBtn = (Button) findViewById(R.id.houseUsersBtn);
+        raspiBtn = (Button) findViewById(R.id.raspiBtn);
 
         actuatorsBtn.setOnClickListener(v -> {
             Intent intent = new Intent(ViewHouseActivity.this, ActuatorList.class);
@@ -63,6 +65,11 @@ public class ViewHouseActivity extends AppCompatActivity {
 
         houseUsersBtn.setOnClickListener(v -> {
             Intent intent = new Intent(ViewHouseActivity.this, LoadHouseUsersActivity.class);
+            startActivity(intent);
+        });
+
+        raspiBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ViewHouseActivity.this, MainActivity.class);
             startActivity(intent);
         });
 

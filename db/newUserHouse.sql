@@ -4,7 +4,7 @@
 --New User
 CREATE PROCEDURE NewUser (_UserID varchar(32), _Password varchar(32))
 BEGIN
-    INSERT INTO User (UserID, UserPass) 
+    INSERT INTO User (UserID, UserPass)
     VALUES (_UserID, _Password);
 END ; --Test: Pass
 
@@ -13,7 +13,7 @@ END ; --Test: Pass
 CREATE PROCEDURE NewHouseByUser (_UserID varchar(32), _Nickname varchar(32), _Category varchar(32))
 BEGIN
     --Create new House
-    INSERT INTO House (Nickname, Category) 
+    INSERT INTO House (Nickname, Category)
     VALUES (_Nickname, _Category);
     --Link new house to the user and grant owner status
     INSERT INTO UserHouse (UserID, HouseID, Permission)
@@ -38,37 +38,37 @@ END; --Test: Untested
 --Invites user to house
 CREATE PROCEDURE AddUserToHouse (_UserID varchar(32), _HouseID int, _Permission int)
 BEGIN
-    INSERT INTO UserHouse (UserID, HouseID, Permission) 
+    INSERT INTO UserHouse (UserID, HouseID, Permission)
     VALUES (_UserID, _HouseID, _Permission);
 END ; --Test: Pass
 
 
 --Removes User from House
-CREATE PROCEDURE RemoveHouseUser 
+CREATE PROCEDURE RemoveHouseUser
 (_UserID varchar(32), _AdminID varchar(32), _HouseID int)
 BEGIN
     DELETE FROM UserHouse
     WHERE UserID=_UserID AND HouseID=_HouseID AND _UserID!=_AdminID AND
     EXISTS (SELECT UserID
-        FROM UserHouse 
+        FROM UserHouse
         WHERE UserID = _AdminID AND Permission >= 3 AND HouseID = _HouseID);
 END ; --Test: Pass
 
 
 --Change User's permissions
-CREATE PROCEDURE ChangeUserPermissions 
+CREATE PROCEDURE ChangeUserPermissions
 (_UserID varchar(32), _AdminID varchar(32), _HouseID int, _Permission int)
 BEGIN
     UPDATE UserHouse
     SET Permission=_Permission
-    WHERE EXISTS (SELECT UserID 
-        FROM UserHouse 
-        WHERE UserID = _AdminID 
+    WHERE EXISTS (SELECT UserID
+        FROM UserHouse
+        WHERE UserID = _AdminID
         AND HouseID = _HouseID
         AND Permission >= 3)
-    AND _Permission <= (SELECT Permission 
-        FROM UserHouse 
-        WHERE UserID=_AdminID 
+    AND _Permission <= (SELECT Permission
+        FROM UserHouse
+        WHERE UserID=_AdminID
         AND HouseID=_HouseID);
 END ; --Test: Pass
 
@@ -84,7 +84,7 @@ END; --Test: Pass
 
 
 --Test the User authentification (1=Valid, 0=Invalid:={temperature:.3f}outVal)
-CREATE PROCEDURE TestLogin 
+CREATE PROCEDURE TestLogin
     (_UserID varchar(32), _Password varchar(32))
 BEGIN
     SELECT COUNT(UserID) AS ValidAuth
@@ -116,4 +116,3 @@ BEGIN
             ON User.UserID = UserHouse.UserID
     WHERE UserHouse.HouseID = _HouseID;
 END ; --Test: Pass
-
