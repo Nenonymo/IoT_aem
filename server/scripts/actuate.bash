@@ -50,16 +50,15 @@ if [ "$value" -ne 0 ] && [ "$value" -ne 1 ]; then
     exit 1;
 fi
 
+for actuator in "$@"
+do
+    echo "tdtool --${valueArray[$value]} $actuator"
+done
 
 if [ "$delay" -gt 0 ]; then
     if [[ ! " ${unitArray[*]} " =~ " ${unit} " ]]; then
         usage;
         exit 1;
     fi
-	(sleep "${delay}""$unit"; ./actuate.bash -v "$value" "$@") & 
+	(sleep "${delay}""$unit"; ./actuate.bash -v $((1-$value)) "$@") & 
 fi
-
-for actuator in "$@"
-do
-    tdtool --${valueArray[$value]} $actuator
-done
