@@ -80,9 +80,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(LoginActivity.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
+                        while(SQLstuff.getCon() == null){
+                            SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
+                        }
                     }
                 });
-                z = "On Internet Connection";
+                n = "On Internet Connection";
             }
             else {
                 try {

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iotlab3app.Connection.ConnectionClass;
 import com.example.iotlab3app.Connection.Pistuff;
 import com.example.iotlab3app.Connection.SQLstuff;
 import com.example.iotlab3app.Login.LoginActivity;
@@ -81,12 +82,12 @@ public class ActuatorList extends AppCompatActivity {
                 String actuatorID = itemMap.get(item);
                 Boolean ONorOFF = actuatorONorOFF.get(actuatorID);
                 if (Boolean.TRUE.equals(ONorOFF)){
-                    Pistuff.actuatorOff(itemMap.get(item));
+                    //Pistuff.actuatorOff(itemMap.get(item));
                     actuatorONorOFF.put(actuatorID, false);
                     System.out.println(item + " OFF: " + actuatorID);
                 }
                 if (Boolean.FALSE.equals(ONorOFF)){
-                    Pistuff.actuatorOn(itemMap.get(item));
+                    //Pistuff.actuatorOn(itemMap.get(item));
                     actuatorONorOFF.put(actuatorID, true);
                     System.out.println(item + " ON: " + actuatorID);
                 }
@@ -113,44 +114,44 @@ public class ActuatorList extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ActuatorList.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
+                        while(SQLstuff.getCon() == null){
+                            SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
+                        }
                     }
                 });
                 n = "On Internet Connection";
             }
+            try {
 
-            else {
                 try {
+                    ResultSet items = SQLstuff.runSQL("CALL GetHouseActuatorsMin(" + SQLstuff.getHouse() + ");");
+                    System.out.println("after CALL");
+                    System.out.println("1: " + items.getInt(2));
+                    System.out.println("2: " + items.getString(3));
 
-                    try {
-                        ResultSet items = SQLstuff.runSQL("CALL GetHouseActuatorsMin(" + SQLstuff.getHouse() + ");");
-                        System.out.println("after CALL");
-                        System.out.println("1: " + items.getInt(2));
-                        System.out.println("2: " + items.getString(3));
+                    System.out.println(items.toString());
 
-                        System.out.println(items.toString());
-
-                        if (items == null){
-                            System.out.println("bruh");
-                        }
-                        assert items != null;
+                    if (items == null){
+                        System.out.println("bruh");
+                    }
+                    assert items != null;
+                    itemMap.put(items.getString(3), items.getString(2));
+                    actuatorONorOFF.put(items.getString(2), false);
+                    System.out.println(itemMap.values());
+                    while (items.next()){
                         itemMap.put(items.getString(3), items.getString(2));
                         actuatorONorOFF.put(items.getString(2), false);
-                        System.out.println(itemMap.values());
-                        while (items.next()){
-                            itemMap.put(items.getString(3), items.getString(2));
-                            actuatorONorOFF.put(items.getString(2), false);
-                            System.out.println("In While");
-                        }
-                        listItems = itemMap.keySet().toArray(new String[0]);
-                        System.out.println("Rows: " + listItems);
-                    } catch (SQLException e) {
-                        System.out.println(e);
+                        System.out.println("In While");
                     }
-
-                }catch (Exception e){
-                    onSuccess = false;
-                    Log.e("SQL Error : ", e.getMessage());
+                    listItems = itemMap.keySet().toArray(new String[0]);
+                    System.out.println("Rows: " + listItems);
+                } catch (SQLException e) {
+                    System.out.println(e);
                 }
+
+            }catch (Exception e){
+                onSuccess = false;
+                Log.e("SQL Error : ", e.getMessage());
             }
 
             return n;
