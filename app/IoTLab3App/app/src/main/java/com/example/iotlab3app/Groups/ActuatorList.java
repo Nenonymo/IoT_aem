@@ -3,18 +3,22 @@ package com.example.iotlab3app.Groups;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iotlab3app.Connection.Pistuff;
 import com.example.iotlab3app.Connection.SQLstuff;
+import com.example.iotlab3app.Login.LoginActivity;
+import com.example.iotlab3app.Login.ResetPassActivity;
 import com.example.iotlab3app.R;
 
 import java.sql.Array;
@@ -44,8 +48,14 @@ public class ActuatorList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         title = (TextView) findViewById(R.id.actuator_List_Title);
-
         setContentView(R.layout.activity_actuator_list);
+
+        Button new_actuator = (Button) findViewById(R.id.new_actuator);
+        new_actuator.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ResetPassActivity.class);
+            startActivity(intent);
+        });
+
         listItems = mobileArray;
         try {
             System.out.println("before async");
@@ -101,7 +111,7 @@ public class ActuatorList extends AppCompatActivity {
                 try {
 
                     try {
-                        ResultSet items = SQLstuff.runSQL("CALL GetHouseActuatorsMin(5);");
+                        ResultSet items = SQLstuff.runSQL("CALL GetHouseActuatorsMin(" + SQLstuff.getHouse() + ");");
                         System.out.println("after CALL");
                         System.out.println("1: " + items.getInt(2));
                         System.out.println("2: " + items.getString(3));

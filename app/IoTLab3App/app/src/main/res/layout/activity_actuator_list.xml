@@ -21,7 +21,16 @@
         android:id="@+id/actuator_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/new_actuator"
         app:layout_constraintTop_toBottomOf="@+id/actuator_List_Title"
         tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/new_actuator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New actuator"
+        app:layout_constraintTop_toBottomOf="@+id/actuator_list"
+        tools:layout_editor_absoluteX="129dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
