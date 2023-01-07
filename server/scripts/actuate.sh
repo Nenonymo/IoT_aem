@@ -52,7 +52,7 @@ fi
 
 for actuator in "$@"
 do
-    tdtool --${valueArray[$value]} $actuator
+    tdtool --"${valueArray[$value]}" "$actuator"
 done
 
 if [ "$delay" -gt 0 ]; then
@@ -60,5 +60,5 @@ if [ "$delay" -gt 0 ]; then
         usage;
         exit 1;
     fi
-	(sleep "${delay}""$unit"; ./actuate.bash -v $((1-value)) "$@") & 
+	(sleep "${delay}""$unit"; ./actuate.sh -v $((1-value)) "$@") & 
 fi
