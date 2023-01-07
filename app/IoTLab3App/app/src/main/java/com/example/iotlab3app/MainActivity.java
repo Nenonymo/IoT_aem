@@ -70,8 +70,12 @@ public class MainActivity extends AppCompatActivity {
         btnUpdateTemp = (Button) findViewById(R.id.btnUpdateTemp);
         btnUpdateTemp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                txv_temp_indoor.setText(Pistuff.run("bash getTemp"));
+                txv_temp_indoor.setText(Pistuff.run("bash getTempValue"));
             }
         });
     }
+
+
+
+
 }
