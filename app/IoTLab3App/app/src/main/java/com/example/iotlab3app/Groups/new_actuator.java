@@ -69,9 +69,7 @@ public class new_actuator extends AppCompatActivity {
 
             try {
                 if(nickname.getText().length() > 0 && location.getText().length() > 0 && ID.getText().length() > 0 && type.getText().length() > 0){
-                    ResultSet rs = SQLstuff.runSQL("CALL NewActuator(" + SQLstuff.getHouse() +
-                            ", '" + nickname.getText() + "', '" + ID.getText() +
-                            "', '" + location.getText() + "', '" + type.getText() + "');");
+                    ResultSet rs = SQLstuff.runSQL("CALL NewActuator(" + SQLstuff.getHouse() + ", '" + nickname.getText() + "', '" + ID.getText() + "', '" + location.getText() + "', '" + type.getText() + "');");
 
                     Toast.makeText(new_actuator.this, "New actuator added", Toast.LENGTH_SHORT).show();
 
