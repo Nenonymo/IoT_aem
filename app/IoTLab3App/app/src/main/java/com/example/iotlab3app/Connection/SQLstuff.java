@@ -48,7 +48,6 @@ public class SQLstuff {
         ResultSet rs = null;
         Statement stmt = SQLstuff.getCon().createStatement();
         rs = stmt.executeQuery(sql);
-        rs.first();
 
         return rs;
     }
