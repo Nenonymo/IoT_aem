@@ -114,11 +114,11 @@ public class ActuatorList extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ActuatorList.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
-                        while(SQLstuff.getCon() == null){
-                            SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
-                        }
                     }
                 });
+                while(SQLstuff.getCon() == null){
+                    SQLstuff.setCon(SQLstuff.connectionClass(ConnectionClass.un.toString(),ConnectionClass.pass.toString(),ConnectionClass.db.toString(),ConnectionClass.ip.toString()));
+                }
                 n = "On Internet Connection";
             }
             try {
