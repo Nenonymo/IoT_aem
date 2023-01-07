@@ -70,14 +70,23 @@ public class new_actuator extends AppCompatActivity {
             try {
                 if(nickname.getText().length() > 0 && location.getText().length() > 0 && ID.getText().length() > 0 && type.getText().length() > 0){
                     ResultSet rs = SQLstuff.runSQLnoFirst("CALL NewActuator(" + SQLstuff.getHouse() + ", '" + nickname.getText() + "', '" + ID.getText() + "', '" + location.getText() + "', '" + type.getText() + "');");
-
-                    Toast.makeText(new_actuator.this, "New actuator added", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(new_actuator.this, "New actuator added", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                     Intent intent = new Intent(new_actuator.this, ActuatorList.class);
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(new_actuator.this, "Please insert text in all fields", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(new_actuator.this, "Please insert text in all fields", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
