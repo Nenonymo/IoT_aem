@@ -174,7 +174,7 @@ public class ViewGroupActivity extends AppCompatActivity{
 
                     String houseid = SQLstuff.getHouse();
                     String groupid = SQLstuff.getGroup();
-                    String actid = SQLstuff.getHouse();
+                    String actid = SQLstuff.getGroupActuator();
                     String actAddID = SQLstuff.getAddHouseActuator();
 
                     if (actuatorOption.equals("LoadGroupActuators")) {
@@ -199,8 +199,9 @@ public class ViewGroupActivity extends AppCompatActivity{
                     }
 
                     else if (actuatorOption.equals("DeleteActuator")){
+
                         sql = "CALL RemoveActuatorFromGroup('" + groupid + "', '" + actid + "');";
-                        System.out.println(actid);
+                        System.out.println("here: " + actid);
                     }
                     else if(actuatorOption.equals("DeleteHouseActuator")){
                         sql = "CALL RemoveActuator('" + actAddID + "');";
