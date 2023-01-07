@@ -48,9 +48,18 @@ public class SQLstuff {
         ResultSet rs = null;
         Statement stmt = SQLstuff.getCon().createStatement();
         rs = stmt.executeQuery(sql);
+        rs.first();
 
         return rs;
     }
+    @Nullable
+    public static ResultSet runSQLnoFirst(String sql) throws SQLException {
+        ResultSet rs = null;
+        Statement stmt = SQLstuff.getCon().createStatement();
+        rs = stmt.executeQuery(sql);
+        return rs;
+    }
+
 
     public static String getUsername() {
         return username;
