@@ -71,8 +71,8 @@ public class ActuatorList extends AppCompatActivity {
 
         load_group_actuators.setOnClickListener(v -> new checkGroups().execute("LoadExistingGroups"));
 
-        turn_on.setOnClickListener(v -> turnOnOrOff("On"));
-        turn_off.setOnClickListener(v -> turnOnOrOff("Off"));
+        turn_on.setOnClickListener(v -> turnOnOrOff(true));
+        turn_off.setOnClickListener(v -> turnOnOrOff(false));
 
         listItems = mobileArray;
         try {
@@ -111,11 +111,11 @@ public class ActuatorList extends AppCompatActivity {
         });
     }
 
-    public void turnOnOrOff (String input){
+    public void turnOnOrOff (Boolean input){
         ResultSet rs;
         String sql;
 
-        List<String> groupData = new ArrayList<>();
+        StringBuffer groupData = new StringBuffer();
 
         String groupid = SQLstuff.getGroup();
         sql = "CALL GetGroupMembers('" + groupid + "');";
@@ -125,13 +125,13 @@ public class ActuatorList extends AppCompatActivity {
             rs = SQLstuff.runSQL(sql);
             assert rs != null;
             if(rs != null){
-                String firstRow = rs.getString(1);
-                groupData.add(firstRow);
+                String firstRow = rs.getString("Address");
+                groupData.append(firstRow + " ");
                 while (rs.next()) {
-                    String row = rs.getString(1);
-                    groupData.add(row);
+                    String row = rs.getString("Address");
+                    groupData.append(row + " ");
                 }
-                System.out.println(groupData);
+                System.out.println("After stringbudder: " + groupData + "\ninput: " + input);
             }
             else {
                 System.out.println("Empty");
@@ -139,15 +139,15 @@ public class ActuatorList extends AppCompatActivity {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        System.out.println("bruh: " + input);
+        if(input){
 
-        if(input.equals("On")){
-
-            Pistuff.run("bash actuate.sh -v 1 " + String.join(" ", groupData));
-            System.out.println(String.join(" ", groupData));
+            System.out.println("bash actuate.sh -v 1 " + groupData);
+            Pistuff.run("bash actuate.sh -v 1 " + groupData);
 
         } else {
-            Pistuff.run("bash actuate.sh -v 0 " + String.join(" ", groupData));
-            System.out.println(String.join(" ", groupData));
+            System.out.println("bash actuate.sh -v 0 " + groupData);
+            Pistuff.run("bash actuate.sh -v 0 " + groupData);
 
         }
 
