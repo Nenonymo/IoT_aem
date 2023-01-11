@@ -54,6 +54,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, ResetPassActivity.class);
             startActivity(intent);
         });
+
+
+        Button piIPbtn = (Button)findViewById(R.id.piIPbtn);
+        EditText piIP = (EditText)findViewById(R.id.raspiIP);
+
+        piIPbtn.setOnClickListener(v -> {
+            Pistuff.setHostname(piIP.getText().toString());
+        });
     }
 
     @SuppressLint("StaticFieldLeak")

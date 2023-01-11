@@ -58,4 +58,19 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/raspiIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Raspberry IP"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/piIPbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:text="Set Raspberry IP"
+        android:textSize="14sp" />
+
 </LinearLayout>

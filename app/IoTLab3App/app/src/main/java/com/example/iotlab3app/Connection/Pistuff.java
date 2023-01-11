@@ -12,7 +12,7 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
 public class Pistuff {
-    static String hostname = "192.168.1.137";
+    static String hostname = "172.20.10.12";
     static String username = "pi";
     static String password = "student123";
 
@@ -50,6 +50,10 @@ public class Pistuff {
             System.exit(2);
         }
         return null;
+    }
+
+    public static void setHostname(String hostname) {
+        Pistuff.hostname = hostname;
     }
 
     public static void actuatorOn(String aId){

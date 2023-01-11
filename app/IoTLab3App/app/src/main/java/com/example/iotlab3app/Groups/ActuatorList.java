@@ -98,12 +98,12 @@ public class ActuatorList extends AppCompatActivity {
                 String actuatorID = itemMap.get(item);
                 Boolean ONorOFF = actuatorONorOFF.get(actuatorID);
                 if (Boolean.TRUE.equals(ONorOFF)){
-                    //Pistuff.actuatorOff(itemMap.get(item));
+                    Pistuff.actuatorOff(itemMap.get(item));
                     actuatorONorOFF.put(actuatorID, false);
                     System.out.println(item + " OFF: " + actuatorID);
                 }
                 if (Boolean.FALSE.equals(ONorOFF)){
-                    //Pistuff.actuatorOn(itemMap.get(item));
+                    Pistuff.actuatorOn(itemMap.get(item));
                     actuatorONorOFF.put(actuatorID, true);
                     System.out.println(item + " ON: " + actuatorID);
                 }
